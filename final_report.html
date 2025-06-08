@@ -1,2 +1,85 @@
-<h2>최종 보고서</h2>
-<p>구현된 기능 설명, 주요 화면 캡처, 사용자 흐름 및 개선점 정리</p>
+<!DOCTYPE html><html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>최종 보고서</title>
+  <style>
+    body {
+      font-family: 'Arial';
+      background: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 1.5em;
+      text-align: center;
+      font-size: 1.8em;
+    }
+    main {
+      padding: 2em 5%;
+    }
+    section {
+      background: white;
+      margin-bottom: 2em;
+      padding: 1.5em;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    h2 {
+      color: #2c3e50;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.3em;
+    }
+    img {
+      max-width: 100%;
+      margin-top: 1em;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    p {
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+<header>교과목 평균 강의시간 안내 - 최종 보고서</header>
+<main>
+  <section>
+    <h2>1. 프로젝트 개요</h2>
+    <p>이 웹사이트는 학생들이 수강 신청 전에 각 교과목의 실제 강의 종료 시각을 확인할 수 있도록 하여, 시간 관리와 강의 선택에 도움을 주기 위해 개발되었습니다.</p>
+  </section>
+
+  <section>
+    <h2>2. 주요 기능 요약</h2>
+    <ul>
+      <li>교수명, 과목명, 요일별 평균 강의 종료 시각 확인</li>
+      <li>사용자 피드백을 통한 데이터 실시간 갱신</li>
+      <li>Chart.js 기반의 종료 시각 시각화</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. 시스템 구성도</h2>
+    <p>Google Sheets와 Apps Script를 활용한 서버리스 구조입니다.</p>
+    <img src="../assets/capture1.png" alt="시스템 구성도">
+  </section>
+
+  <section>
+    <h2>4. 주요 구현 화면</h2>
+    <p><strong>① 메인 페이지</strong></p>
+    <img src="../assets/capture2.png" alt="메인 페이지 캡처">
+
+    <p><strong>② 피드백 입력 화면</strong></p>
+    <img src="../assets/capture3.png" alt="피드백 입력 캡처">
+
+    <p><strong>③ 시각화 결과 화면</strong></p>
+    <img src="../assets/capture4.png" alt="차트 결과 캡처">
+  </section>
+
+  <section>
+    <h2>5. 소감 및 향후 개선 방향</h2>
+    <p>Google Sheets와 연동하여 실시간으로 사용자 피드백을 수집하고, Chart.js를 통해 시각화함으로써 정적 웹사이트에서도 데이터 기반 서비스를 구현할 수 있음을 배웠습니다. 앞으로는 로그인 기반 피드백 제한, 모바일 반응형 UI 개선, 필터링/정렬 기능 추가 등을 고려하고자 합니다.</p>
+  </section>
+</main>
+</body></html>
