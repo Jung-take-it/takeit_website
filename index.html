@@ -1,92 +1,43 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>교과목 평균 강의시간 안내 서비스</title>
-  <style>
-    body {
-      font-family: 'Arial';
-      background: #f5f7fa;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-    header {
-      background: #34495e;
-      color: white;
-      padding: 1.5em;
-      font-size: 1.8em;
-    }
-    main {
-      padding: 2em;
-    }
-    a.button {
-      text-decoration: none;
-      background: #3498db;
-      color: white;
-      padding: 0.6em 1.5em;
-      border-radius: 10px;
-      display: inline-block;
-      margin: 0.5em 0;
-    }
-    .card {
-      background: white;
-      max-width: 500px;
-      margin: 1em auto;
-      padding: 1em;
-      border-radius: 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>학과별 평균 강의 종료 시각</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {packages: ['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        const queryString = encodeURIComponent('SELECT A, B');
+        const dataSourceUrl = 'https://docs.google.com/spreadsheets/d/1KR1_paUyanHremQVWQCq46CzHTNT4ibG8uvQd50oEkw/gviz/tq?sheet=Sheet1&headers=1&tq=' + queryString;
+
+        const query = new google.visualization.Query(dataSourceUrl);
+        query.send(handleQueryResponse);
+      }
+
+      function handleQueryResponse(response) {
+        if (response.isError()) {
+          console.error('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+          return;
+        }
+
+        const data = response.getDataTable();
+        const options = {
+          title: '학과별 평균 강의 종료 시각',
+          hAxis: { title: '학과' },
+          vAxis: { title: '종료 시각 (24시간 기준)' },
+          legend: 'none'
+        };
+
+        const chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
 </head>
 <body>
-  <header>교과목 평균 강의시간 안내 서비스</header>
-  <main>
-    <a class="button" href="summary.html">서비스 요약</a><br>
-    <a class="button" href="project/detail.html">개인 프로젝트</a><br>
-    <a class="button" href="feedback.html">피드백 입력</a><br>
-    <a class="button" href="chart.html">강의 종료 시각 통계</a><br><br>
-
-    <h2>📊 학과별 평균 종료 시각</h2>
-    <div id="department-stats">로딩 중...</div>
-  </main>
-
-  <script>
-    const apiUrl = "https://script.google.com/macros/s/AKfycbw6Vq59qX878Mp8AWVkR_zlDEIUv5KEz8mB27uQqd8SL5_L4rZ-2Iyagnmxy0u94SWQ/exec";
-    fetch(apiUrl)
-      .then(res => res.json())
-      .then(data => {
-        const deptTimes = {};
-
-        data.forEach(entry => {
-          const dept = entry.학과명 || entry.department;
-          const time = entry.수업종료시간 || entry.endtime;
-          if (!dept || !time || !time.includes(":")) return;
-
-          const [hh, mm] = time.split(":").map(Number);
-          const totalMin = hh * 60 + mm;
-
-          if (!deptTimes[dept]) deptTimes[dept] = [];
-          deptTimes[dept].push(totalMin);
-        });
-
-        const container = document.getElementById("department-stats");
-        container.innerHTML = "";
-
-        Object.entries(deptTimes).forEach(([dept, times]) => {
-          const avg = Math.round(times.reduce((a, b) => a + b, 0) / times.length);
-          const hour = String(Math.floor(avg / 60)).padStart(2, "0");
-          const min = String(avg % 60).padStart(2, "0");
-
-          const card = document.createElement("div");
-          card.className = "card";
-          card.innerHTML = `<strong>${dept}</strong><br>평균 종료 시각: <em>${hour}:${min}</em>`;
-          container.appendChild(card);
-        });
-      })
-      .catch(err => {
-        document.getElementById("department-stats").innerText = "데이터를 불러오지 못했습니다.";
-      });
-  </script>
+    <h1>학과별 평균 강의 종료 시각</h1>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
 </body>
 </html>
