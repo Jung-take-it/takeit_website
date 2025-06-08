@@ -1,55 +1,86 @@
 <!DOCTYPE html><html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>교과목 평균 강의시간 안내</title>
+  <title>최종 보고서</title>
   <style>
     body {
       font-family: 'Arial';
-      background: #f5f7fa;
+      background: #f8f9fa;
       margin: 0;
       padding: 0;
-      text-align: center;
     }
     header {
-      background: #34495e;
+      background: #2c3e50;
       color: white;
-      padding: 1em;
-      font-size: 1.5em;
+      padding: 1.5em;
+      text-align: center;
+      font-size: 1.8em;
     }
     main {
-      padding: 2em;
+      padding: 2em 5%;
     }
-    .card {
+    section {
       background: white;
+      margin-bottom: 2em;
       padding: 1.5em;
-      margin: 1em auto;
-      max-width: 600px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      text-align: left;
-    }
-    a.button {
-      text-decoration: none;
-      background: #3498db;
-      color: white;
-      padding: 0.6em 1.5em;
       border-radius: 10px;
-      display: inline-block;
-      margin: 0.5em 0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    h2 {
+      color: #2c3e50;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.3em;
+    }
+    img {
+      max-width: 100%;
+      margin-top: 1em;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    p {
+      line-height: 1.6;
     }
   </style>
 </head>
 
 <body>
-<header>최종 보고서</header>
+<header>교과목 평균 강의시간 안내 - 최종 보고서</header>
 <main>
-  <div class="card">
-    <h2>요약</h2>
-    <p>이 웹사이트는 학생들이 수업 선택 시 강의시간을 보다 정확하게 파악할 수 있도록 돕습니다.</p>
-  </div>
-  <div class="card">
-    <h2>주요 화면 캡처</h2>
-    <p>📸 캡처를 여기에 삽입하세요 (예: chart.html, feedback.html 등)</p>
-  </div>
+  <section>
+    <h2>1. 프로젝트 개요</h2>
+    <p>이 웹사이트는 학생들이 수강 신청 전에 각 교과목의 실제 강의 종료 시각을 확인할 수 있도록 하여, 시간 관리와 강의 선택에 도움을 주기 위해 개발되었습니다.</p>
+  </section>
+
+  <section>
+    <h2>2. 주요 기능 요약</h2>
+    <ul>
+      <li>교수명, 과목명, 요일별 평균 강의 종료 시각 확인</li>
+      <li>사용자 피드백을 통한 데이터 실시간 갱신</li>
+      <li>Chart.js 기반의 종료 시각 시각화</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. 시스템 구성도</h2>
+    <p>아래는 Google Sheets를 활용한 시스템 구성도입니다.</p>
+    <img src="../assets/capture1.png" alt="시스템 구성도 예시">
+  </section>
+
+  <section>
+    <h2>4. 주요 구현 화면</h2>
+    <p><strong>① 메인 페이지</strong></p>
+    <img src="../assets/capture2.png" alt="index.html 캡처">
+
+    <p><strong>② 피드백 입력 화면</strong></p>
+    <img src="../assets/capture3.png" alt="feedback.html 캡처">
+
+    <p><strong>③ 시각화 결과 화면</strong></p>
+    <img src="../assets/capture4.png" alt="chart.html 캡처">
+  </section>
+
+  <section>
+    <h2>5. 소감 및 향후 개선 방향</h2>
+    <p>웹 기술과 구글 시트를 연동하여 실시간 피드백 반영이 가능한 시스템을 구현할 수 있어 매우 유익한 경험이었습니다. 추후에는 로그인 기반 피드백 제한, 모바일 반응형 개선, 시각화 기능 고도화를 추가하고자 합니다.</p>
+  </section>
 </main>
 </body></html>
