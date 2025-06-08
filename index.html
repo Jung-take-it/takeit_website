@@ -3,36 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <title>교과목 평균 강의시간 안내</title>
-  <style>
-    body {
-      font-family: 'Arial';
-      background: #f5f7fa;
-      text-align: center;
-      margin: 0;
-    }
-    h1 {
-      background: #34495e;
-      color: white;
-      padding: 1em;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
-      margin: 1em;
-    }
-    a {
-      text-decoration: none;
-      background: #3498db;
-      color: white;
-      padding: 0.6em 1.2em;
-      border-radius: 5px;
-    }
-    a:hover {
-      background: #2980b9;
-    }
-  </style>
+<style>
+  body {
+    font-family: 'Arial';
+    background: #f5f7fa;
+    text-align: center;
+    margin: 0;
+  }
+  h1 {
+    background: #34495e;
+    color: white;
+    padding: 1em;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  li {
+    margin: 1em 0; /* ✅ 각 항목 사이에 간격 추가 */
+  }
+  a {
+    text-decoration: none;
+    background: #3498db;
+    color: white;
+    padding: 0.6em 1.5em;
+    border-radius: 10px;
+    display: inline-block;
+    font-size: 1rem;
+    transition: 0.2s;
+  }
+  a:hover {
+    background: #2980b9;
+    transform: scale(1.05);
+  }
+</style>
 </head>
 <body>
   <h1>교과목 평균 강의시간 안내 서비스</h1>
