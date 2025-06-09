@@ -3,36 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <title>14장. 캔버스 기초</title>
-  
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #fdfdfd;
-    padding: 40px;
-    line-height: 1.6;
-  }
-  h1, h2 {
-    color: #2c3e50;
-  }
-  pre {
-    background: #f4f4f4;
-    padding: 10px;
-    border-left: 4px solid #ccc;
-    overflow-x: auto;
-  }
-  code {
-    font-family: monospace;
-  }
-</style>
-
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 30px;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    h2 {
+      color: #1a73e8;
+      margin-top: 40px;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    canvas {
+      border: 1px solid #999;
+      display: block;
+      margin: 20px auto;
+    }
+  </style>
 </head>
 <body>
   <h1>14장. 캔버스 기초</h1>
-  <p>이 페이지는 "14장. 캔버스 기초"에 대한 기초 개념과 예제를 설명합니다.</p>
-  <p>아래는 기본 예시입니다. (필요시 상세 내용 추가 가능)</p>
-  <pre><code>// 예시 코드
-console.log("Hello, 14장. 캔버스 기초");
-</code></pre>
-  <p><a href="index.html">← 돌아가기</a></p>
+
+  <h2>1. 캔버스(Canvas)란?</h2>
+  <p>HTML5에서 도입된 &lt;canvas&gt; 요소는 픽셀 기반 그래픽을 그릴 수 있는 공간을 제공합니다.</p>
+
+  <h2>2. 기본 문법</h2>
+  <pre><code>&lt;canvas id="myCanvas" width="300" height="150"&gt;&lt;/canvas&gt;
+
+&lt;script&gt;
+  const canvas = document.getElementById("myCanvas");
+  const ctx = canvas.getContext("2d");
+  ctx.fillStyle = "blue";
+  ctx.fillRect(50, 20, 100, 100);
+&lt;/script&gt;</code></pre>
+
+  <h2>3. 주요 메서드</h2>
+  <ul>
+    <li><strong>fillRect(x, y, width, height)</strong> – 사각형 그리기</li>
+    <li><strong>beginPath(), moveTo(), lineTo()</strong> – 선 그리기</li>
+    <li><strong>arc(x, y, radius, startAngle, endAngle)</strong> – 원형 그리기</li>
+    <li><strong>stroke(), fill()</strong> – 테두리/채우기</li>
+    <li><strong>clearRect(x, y, width, height)</strong> – 지우기</li>
+  </ul>
+
+  <h2>4. 실습 예제</h2>
+  <canvas id="sampleCanvas" width="300" height="150"></canvas>
+  <script>
+    const canvas = document.getElementById("sampleCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // 파란 사각형
+    ctx.fillStyle = "blue";
+    ctx.fillRect(20, 20, 80, 80);
+
+    // 빨간 선
+    ctx.beginPath();
+    ctx.moveTo(120, 20);
+    ctx.lineTo(200, 80);
+    ctx.strokeStyle = "red";
+    ctx.stroke();
+
+    // 초록 원
+    ctx.beginPath();
+    ctx.arc(150, 100, 30, 0, Math.PI * 2);
+    ctx.fillStyle = "green";
+    ctx.fill();
+  </script>
+
 </body>
 </html>
