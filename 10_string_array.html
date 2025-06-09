@@ -3,36 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <title>10장. 문자열과 배열</title>
-  
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #fdfdfd;
-    padding: 40px;
-    line-height: 1.6;
-  }
-  h1, h2 {
-    color: #2c3e50;
-  }
-  pre {
-    background: #f4f4f4;
-    padding: 10px;
-    border-left: 4px solid #ccc;
-    overflow-x: auto;
-  }
-  code {
-    font-family: monospace;
-  }
-</style>
-
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 30px;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    h2 {
+      color: #1a73e8;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+  </style>
 </head>
 <body>
   <h1>10장. 문자열과 배열</h1>
-  <p>이 페이지는 "10장. 문자열과 배열"에 대한 기초 개념과 예제를 설명합니다.</p>
-  <p>아래는 기본 예시입니다. (필요시 상세 내용 추가 가능)</p>
-  <pre><code>// 예시 코드
-console.log("Hello, 10장. 문자열과 배열");
-</code></pre>
-  <p><a href="index.html">← 돌아가기</a></p>
+  <h2>1. 문자열(String)</h2>
+<p>문자열은 텍스트 데이터를 저장하는 데 사용되며, 다양한 메서드를 통해 조작할 수 있습니다.</p>
+<pre><code>let str = "Hello World";
+console.log(str.length);           // 11
+console.log(str.toUpperCase());   // HELLO WORLD
+console.log(str.indexOf("World")); // 6</code></pre>
+<h2>2. 배열(Array)</h2>
+<p>배열은 여러 값을 순차적으로 저장하는 자료구조입니다.</p>
+<pre><code>let fruits = ["사과", "바나나", "오렌지"];
+fruits.push("포도");
+console.log(fruits);              // ["사과", "바나나", "오렌지", "포도"]
+console.log(fruits[1]);           // 바나나</code></pre>
+
 </body>
 </html>
