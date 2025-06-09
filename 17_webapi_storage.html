@@ -3,36 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <title>17장. 웹 API, 스토리지 API</title>
-  
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #fdfdfd;
-    padding: 40px;
-    line-height: 1.6;
-  }
-  h1, h2 {
-    color: #2c3e50;
-  }
-  pre {
-    background: #f4f4f4;
-    padding: 10px;
-    border-left: 4px solid #ccc;
-    overflow-x: auto;
-  }
-  code {
-    font-family: monospace;
-  }
-</style>
-
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 30px;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    h2 {
+      color: #1a73e8;
+      margin-top: 40px;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+    }
+    table, th, td {
+      border: 1px solid #aaa;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+  </style>
 </head>
 <body>
   <h1>17장. 웹 API, 스토리지 API</h1>
-  <p>이 페이지는 "17장. 웹 API, 스토리지 API"에 대한 기초 개념과 예제를 설명합니다.</p>
-  <p>아래는 기본 예시입니다. (필요시 상세 내용 추가 가능)</p>
-  <pre><code>// 예시 코드
-console.log("Hello, 17장. 웹 API, 스토리지 API");
-</code></pre>
-  <p><a href="index.html">← 돌아가기</a></p>
+
+  <h2>1. 웹 API란?</h2>
+  <p>웹 브라우저가 제공하는 기능으로, 자바스크립트에서 사용할 수 있는 내장 API입니다. 예: DOM API, Fetch API, Storage API 등</p>
+
+  <h2>2. 스토리지 API</h2>
+  <p>웹 페이지에 데이터를 저장할 수 있는 API입니다. 크게 두 가지 종류가 있습니다:</p>
+  <table>
+    <tr>
+      <th>종류</th>
+      <th>특징</th>
+      <th>유지기간</th>
+      <th>용도</th>
+    </tr>
+    <tr>
+      <td>localStorage</td>
+      <td>영구 저장</td>
+      <td>브라우저 종료 후에도 유지</td>
+      <td>사용자 설정, 토큰 저장 등</td>
+    </tr>
+    <tr>
+      <td>sessionStorage</td>
+      <td>세션 저장</td>
+      <td>브라우저 탭 닫으면 삭제</td>
+      <td>임시 상태 유지</td>
+    </tr>
+  </table>
+
+  <h2>3. localStorage 사용 예시</h2>
+  <pre><code>// 저장
+localStorage.setItem("username", "홍길동");
+
+// 불러오기
+const name = localStorage.getItem("username");
+console.log(name); // "홍길동"
+
+// 삭제
+localStorage.removeItem("username");</code></pre>
+
+  <h2>4. sessionStorage 사용 예시</h2>
+  <pre><code>// 저장
+sessionStorage.setItem("tempData", "임시 정보");
+
+// 불러오기
+console.log(sessionStorage.getItem("tempData")); // "임시 정보"
+
+// 삭제
+sessionStorage.removeItem("tempData");</code></pre>
+
+  <h2>5. 간단한 활용 예제</h2>
+  <pre><code>&lt;input id="memo" type="text" placeholder="메모 입력"&gt;
+&lt;button onclick="saveMemo()">저장</button&gt;
+
+&lt;script&gt;
+  function saveMemo() {
+    const text = document.getElementById("memo").value;
+    localStorage.setItem("memo", text);
+    alert("저장되었습니다!");
+  }
+&lt;/script&gt;</code></pre>
+
 </body>
 </html>
