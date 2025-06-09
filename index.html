@@ -46,5 +46,13 @@
     <li><a href="18_public_api.html">18장. 공개 API</a></li>
     <li><a href="project_showcase.html">프로젝트 문서</a></li>
   </ul>
+
+  <script>
+    if (!window.location.search.includes("v=")) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("v", Date.now());
+      window.location.replace(url.toString());
+    }
+  </script>
 </body>
 </html>
