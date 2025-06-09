@@ -2,91 +2,49 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>교과목 평균 강의시간 안내 서비스</title>
+  <title>웹프로그래밍 기초 개념 정리</title>
   <style>
     body {
-      font-family: 'Arial';
-      background: #f5f7fa;
-      margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 40px;
+    }
+    h1 {
       text-align: center;
     }
-    header {
-      background: #34495e;
-      color: white;
-      padding: 1.5em;
-      font-size: 1.8em;
+    ul {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0;
+      list-style-type: none;
     }
-    main {
-      padding: 2em;
+    li {
+      background: #fff;
+      margin: 10px 0;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
-    a.button {
+    a {
       text-decoration: none;
-      background: #3498db;
-      color: white;
-      padding: 0.6em 1.5em;
-      border-radius: 10px;
-      display: inline-block;
-      margin: 0.5em 0;
-    }
-    .card {
-      background: white;
-      max-width: 500px;
-      margin: 1em auto;
-      padding: 1em;
-      border-radius: 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      font-weight: bold;
+      font-size: 18px;
+      color: #1a73e8;
     }
   </style>
 </head>
 <body>
-  <header>교과목 평균 강의시간 안내 서비스</header>
-  <main>
-    <a class="button" href="summary.html">서비스 요약</a><br>
-    <a class="button" href="project/detail.html">개인 프로젝트</a><br>
-    <a class="button" href="feedback.html">피드백 입력</a><br>
-    <a class="button" href="chart.html">강의 종료 시각 통계</a><br><br>
-
-    <h2>📊 학과별 평균 종료 시각</h2>
-    <div id="department-stats">로딩 중...</div>
-  </main>
-
-  <script>
-    const apiUrl = "https://script.google.com/macros/s/AKfycbw6Vq59qX878Mp8AWVkR_zlDEIUv5KEz8mB27uQqd8SL5_L4rZ-2Iyagnmxy0u94SWQ/exec";
-    fetch(apiUrl)
-      .then(res => res.json())
-      .then(data => {
-        const deptTimes = {};
-
-        data.forEach(entry => {
-          const dept = entry.학과명 || entry.department;
-          const time = entry.수업종료시간 || entry.endtime;
-          if (!dept || !time || !time.includes(":")) return;
-
-          const [hh, mm] = time.split(":").map(Number);
-          const totalMin = hh * 60 + mm;
-
-          if (!deptTimes[dept]) deptTimes[dept] = [];
-          deptTimes[dept].push(totalMin);
-        });
-
-        const container = document.getElementById("department-stats");
-        container.innerHTML = "";
-
-        Object.entries(deptTimes).forEach(([dept, times]) => {
-          const avg = Math.round(times.reduce((a, b) => a + b, 0) / times.length);
-          const hour = String(Math.floor(avg / 60)).padStart(2, "0");
-          const min = String(avg % 60).padStart(2, "0");
-
-          const card = document.createElement("div");
-          card.className = "card";
-          card.innerHTML = `<strong>${dept}</strong><br>평균 종료 시각: <em>${hour}:${min}</em>`;
-          container.appendChild(card);
-        });
-      })
-      .catch(err => {
-        document.getElementById("department-stats").innerText = "데이터를 불러오지 못했습니다.";
-      });
-  </script>
+  <h1>웹프로그래밍 기초 개념 정리</h1>
+  <ul>
+    <li><a href="08_window_date_math.html">8장. window, date, math 객체</a></li>
+    <li><a href="09_constructor_class_inheritance.html">9장. 생성자 함수, 클래스, 상속, 객체 키와 값</a></li>
+    <li><a href="10_string_array.html">10장. 문자열과 배열</a></li>
+    <li><a href="12_http_json_exception.html">12장. HTTP 통신, JSON, 예외처리</a></li>
+    <li><a href="13_async_promise_fetch.html">13장. 비동기 프로그래밍, promise, fetch, async/await</a></li>
+    <li><a href="14_canvas.html">14장. 캔버스 기초</a></li>
+    <li><a href="17_webapi_storage.html">17장. 웹 API, 스토리지 API</a></li>
+    <li><a href="18_public_api.html">18장. 공개 API</a></li>
+    <li><a href="project_showcase.html">프로젝트 문서</a></li>
+  </ul>
 </body>
 </html>
