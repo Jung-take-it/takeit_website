@@ -4,7 +4,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>프로젝트 문서 - 강의 시간 시각화</title>
+  <title>프로젝트 문서 - 학과별 평균 강의시간</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
@@ -24,7 +24,7 @@
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    input, button {
+    input, select, button {
       margin: 10px;
       padding: 8px;
       font-size: 16px;
@@ -46,17 +46,27 @@
 </head>
 <body>
 
-  <h1>강의 종료 시각 입력 및 시각화</h1>
+  <h1>학과별 평균 강의시간 시각화</h1>
 
   <form id="lecture-form">
-    <label>학과명: <input type="text" id="dept" required></label>
+    <label>학과명: 
+      <select id="dept" required>
+        <option value="벤처경영학과">벤처경영학과</option>
+        <option value="문화예술학과">문화예술학과</option>
+        <option value="기계공학과">기계공학과</option>
+        <option value="건설공학과">건설공학과</option>
+        <option value="헬스피트니스과">헬스피트니스과</option>
+        <option value="영어과">영어과</option>
+        <option value="정보통신융합공학과">정보통신융합공학과</option>
+      </select>
+    </label>
     <label>강의명: <input type="text" id="subject" required></label>
     <label>종료 시각 (분): <input type="number" id="time" required></label>
     <button type="submit">추가</button>
   </form>
 
   <div class="chart-section">
-    <canvas id="timeChart"></canvas>
+    <canvas id="avgChart"></canvas>
   </div>
 
   <div class="table-section">
@@ -65,18 +75,19 @@
   </div>
 
 <script>
-  const labels = [];
-  const data = {
-    labels: labels,
-    datasets: [{
-      label: '강의 종료 시간 (분)',
-      data: [],
-      backgroundColor: 'rgba(54, 162, 235, 0.6)',
-    }]
-  };
-  const config = {
+  const dataset = [];
+
+  const ctx = document.getElementById('avgChart').getContext('2d');
+  const avgChart = new Chart(ctx, {
     type: 'bar',
-    data: data,
+    data: {
+      labels: [],
+      datasets: [{
+        label: '학과별 평균 강의시간 (분)',
+        data: [],
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+      }]
+    },
     options: {
       scales: {
         y: {
@@ -88,13 +99,25 @@
         }
       }
     }
-  };
-  const myChart = new Chart(
-    document.getElementById('timeChart'),
-    config
-  );
+  });
 
-  const dataset = [];
+  function updateChart() {
+    const deptMap = {};
+    dataset.forEach(row => {
+      if (!deptMap[row.dept]) {
+        deptMap[row.dept] = { total: 0, count: 0 };
+      }
+      deptMap[row.dept].total += row.time;
+      deptMap[row.dept].count += 1;
+    });
+
+    const labels = Object.keys(deptMap);
+    const values = labels.map(dept => Math.round(deptMap[dept].total / deptMap[dept].count));
+
+    avgChart.data.labels = labels;
+    avgChart.data.datasets[0].data = values;
+    avgChart.update();
+  }
 
   document.getElementById('lecture-form').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -103,11 +126,8 @@
     const time = parseInt(document.getElementById('time').value);
 
     if (dept && subject && time) {
-      const label = dept + ' - ' + subject;
-      labels.push(label);
-      data.datasets[0].data.push(time);
-      dataset.push({ dept, subject, professor: "미입력", average: time });
-      myChart.update();
+      dataset.push({ dept, subject, professor: "미입력", time });
+      updateChart();
       this.reset();
     }
   });
@@ -115,7 +135,7 @@
   function renderTable() {
     let html = "<table><thead><tr><th>학과명</th><th>강의명</th><th>교수명</th><th>평균 강의시간</th></tr></thead><tbody>";
     dataset.forEach(row => {
-      html += `<tr><td>${row.dept}</td><td>${row.subject}</td><td>${row.professor}</td><td>${row.average}</td></tr>`;
+      html += `<tr><td>${row.dept}</td><td>${row.subject}</td><td>${row.professor}</td><td>${row.time}</td></tr>`;
     });
     html += "</tbody></table>";
     document.getElementById("table-container").innerHTML = html;
