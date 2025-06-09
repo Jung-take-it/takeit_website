@@ -1,104 +1,126 @@
 
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>실시간 종료 시각 입력 및 그래프</title>
+  <title>프로젝트 문서 - 강의 시간 시각화</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 30px;
-      background-color: #f4f4f4;
+      margin: 40px;
+      background-color: #f7f9fc;
     }
     h1 {
       text-align: center;
+      color: #333;
     }
-    form {
-      max-width: 700px;
+    form, .table-section, .chart-section {
+      max-width: 900px;
       margin: 20px auto;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     input, button {
-      padding: 10px;
+      margin: 10px;
+      padding: 8px;
       font-size: 16px;
     }
-    canvas {
-      max-width: 800px;
-      margin: 30px auto;
-      display: block;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    th {
+      background-color: #e9ecef;
     }
   </style>
 </head>
 <body>
 
-  <h1>학과별 종료 시각 입력 및 실시간 그래프</h1>
+  <h1>강의 종료 시각 입력 및 시각화</h1>
 
-  <form id="entryForm">
-    <input type="text" id="dept" placeholder="학과명 입력 (예: 기계공학과)" required>
-    <input type="text" id="subject" placeholder="강의명 입력 (예: 자료구조)" required>
-    <input type="time" id="time" required>
-    <button type="submit">그래프에 반영</button>
+  <form id="lecture-form">
+    <label>학과명: <input type="text" id="dept" required></label>
+    <label>강의명: <input type="text" id="subject" required></label>
+    <label>종료 시각 (분): <input type="number" id="time" required></label>
+    <button type="submit">추가</button>
   </form>
 
-  <canvas id="chartCanvas" width="800" height="400"></canvas>
+  <div class="chart-section">
+    <canvas id="timeChart"></canvas>
+  </div>
 
-  <script>
-    const ctx = document.getElementById('chartCanvas').getContext('2d');
-    const labels = [];
-    const endTimes = [];
+  <div class="table-section">
+    <button onclick="renderTable()">강의시간 검색</button>
+    <div id="table-container"></div>
+  </div>
 
-    const chart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: '종료 시각 (시간)',
-          data: endTimes,
-          backgroundColor: 'rgba(75, 192, 192, 0.6)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: false,
-            min: 9,
-            max: 18,
-            ticks: {
-              callback: function(value) {
-                const h = Math.floor(value);
-                const m = Math.round((value - h) * 60);
-                return h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0');
-              }
-            },
-            title: {
-              display: true,
-              text: '종료 시각 (hh:mm)'
-            }
+<script>
+  const labels = [];
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: '강의 종료 시간 (분)',
+      data: [],
+      backgroundColor: 'rgba(54, 162, 235, 0.6)',
+    }]
+  };
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: '시간 (분)'
           }
         }
       }
-    });
+    }
+  };
+  const myChart = new Chart(
+    document.getElementById('timeChart'),
+    config
+  );
 
-    document.getElementById('entryForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const dept = document.getElementById('dept').value;
-      const subject = document.getElementById('subject').value;
-      const time = document.getElementById('time').value;
-      if (dept && subject && time) {
-        const [h, m] = time.split(':').map(Number);
-        const decimal = h + m / 60;
-        labels.push(dept + " - " + subject);
-        endTimes.push(decimal);
-        chart.update();
-        this.reset();
-      }
+  const dataset = [];
+
+  document.getElementById('lecture-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const dept = document.getElementById('dept').value;
+    const subject = document.getElementById('subject').value;
+    const time = parseInt(document.getElementById('time').value);
+
+    if (dept && subject && time) {
+      const label = dept + ' - ' + subject;
+      labels.push(label);
+      data.datasets[0].data.push(time);
+      dataset.push({ dept, subject, professor: "미입력", average: time });
+      myChart.update();
+      this.reset();
+    }
+  });
+
+  function renderTable() {
+    let html = "<table><thead><tr><th>학과명</th><th>강의명</th><th>교수명</th><th>평균 강의시간</th></tr></thead><tbody>";
+    dataset.forEach(row => {
+      html += `<tr><td>${row.dept}</td><td>${row.subject}</td><td>${row.professor}</td><td>${row.average}</td></tr>`;
     });
-  </script>
+    html += "</tbody></table>";
+    document.getElementById("table-container").innerHTML = html;
+  }
+</script>
 
 </body>
 </html>
