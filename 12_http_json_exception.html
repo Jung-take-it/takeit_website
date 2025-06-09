@@ -3,36 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <title>12장. HTTP 통신, JSON, 예외처리</title>
-  
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #fdfdfd;
-    padding: 40px;
-    line-height: 1.6;
-  }
-  h1, h2 {
-    color: #2c3e50;
-  }
-  pre {
-    background: #f4f4f4;
-    padding: 10px;
-    border-left: 4px solid #ccc;
-    overflow-x: auto;
-  }
-  code {
-    font-family: monospace;
-  }
-</style>
-
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 30px;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    h2 {
+      color: #1a73e8;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+  </style>
 </head>
 <body>
   <h1>12장. HTTP 통신, JSON, 예외처리</h1>
-  <p>이 페이지는 "12장. HTTP 통신, JSON, 예외처리"에 대한 기초 개념과 예제를 설명합니다.</p>
-  <p>아래는 기본 예시입니다. (필요시 상세 내용 추가 가능)</p>
-  <pre><code>// 예시 코드
-console.log("Hello, 12장. HTTP 통신, JSON, 예외처리");
-</code></pre>
-  <p><a href="index.html">← 돌아가기</a></p>
+
+  <h2>1. HTTP 통신</h2>
+  <p>브라우저에서 서버와 데이터를 주고받기 위해 fetch API를 사용합니다.</p>
+  <pre><code>fetch('https://jsonplaceholder.typicode.com/posts/1')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('에러 발생:', error));</code></pre>
+
+  <h2>2. JSON (JavaScript Object Notation)</h2>
+  <p>서버와 데이터를 주고받을 때 사용되는 경량 데이터 형식입니다.</p>
+  <pre><code>const obj = { name: "홍길동", age: 30 };
+const jsonStr = JSON.stringify(obj); // 객체를 JSON 문자열로
+const parsed = JSON.parse(jsonStr);  // 문자열을 객체로</code></pre>
+
+  <h2>3. 예외처리 (try-catch)</h2>
+  <p>코드 실행 중 오류가 발생할 경우를 대비하여 예외 처리를 합니다.</p>
+  <pre><code>try {
+  const result = riskyFunction();
+  console.log(result);
+} catch (error) {
+  console.error('오류 발생:', error.message);
+} finally {
+  console.log('항상 실행되는 블록');
+}</code></pre>
+
 </body>
 </html>
