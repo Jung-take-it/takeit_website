@@ -1,74 +1,104 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>프로젝트 문서</title>
+  <title>실시간 종료 시각 입력 및 그래프</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f8f8f8;
-      padding: 40px;
-      line-height: 1.6;
+      padding: 30px;
+      background-color: #f4f4f4;
     }
-    h1, h2 {
+    h1 {
       text-align: center;
     }
-    img {
-      display: block;
+    form {
       max-width: 700px;
       margin: 20px auto;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
-    section {
-      max-width: 900px;
-      margin: 0 auto 40px;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    canvas {
+      max-width: 800px;
+      margin: 30px auto;
+      display: block;
     }
   </style>
 </head>
 <body>
-  <h1>웹프로그래밍 프로젝트 문서</h1>
 
-  <section>
-    <h2>1. 프로젝트 개요</h2>
-    <p>이 프로젝트는 GitHub Pages와 HTML, JavaScript를 활용하여 웹프로그래밍 기초 개념을 정리하고, 실제 동작 가능한 예제를 통해 개념을 학습하는 것을 목표로 합니다.</p>
-    <p>또한 Google Sheets, Google Forms를 통해 사용자 피드백과 실시간 통계 시각화를 구현하려 하였습니다.</p>
-  </section>
+  <h1>학과별 종료 시각 입력 및 실시간 그래프</h1>
 
-  <section>
-    <h2>2. 구현 화면 예시</h2>
-    <p>아래는 실제 구현된 GitHub Pages의 메인 화면 및 예제 페이지입니다.</p>
-    <img src="img/index_preview.png" alt="메인 페이지">
-    <img src="img/form_example.png" alt="구글 폼 연동">
-    <img src="img/sheet_chart.png" alt="구글 시트 시각화">
-  </section>
+  <form id="entryForm">
+    <input type="text" id="dept" placeholder="학과명 입력 (예: 기계공학과)" required>
+    <input type="text" id="subject" placeholder="강의명 입력 (예: 자료구조)" required>
+    <input type="time" id="time" required>
+    <button type="submit">그래프에 반영</button>
+  </form>
 
-  <section>
-    <h2>3. 사용한 기술</h2>
-    <ul>
-      <li>HTML5 / CSS3</li>
-      <li>Vanilla JavaScript (ES6+)</li>
-      <li>fetch API / async-await</li>
-      <li>Google Forms, Google Sheets API 연동</li>
-      <li>GitHub Pages 배포</li>
-    </ul>
-  </section>
+  <canvas id="chartCanvas" width="800" height="400"></canvas>
 
-  <section>
-    <h2>4. 어려웠던 점</h2>
-    <p>- Google Forms에서 entry ID를 추출하여 JavaScript에서 자동 제출하는 부분이 까다로웠습니다.</p>
-    <p>- Google Sheets에서 실시간 통계를 JavaScript로 시각화할 때 `NaN` 오류가 자주 발생했습니다.</p>
-    <p>- GitHub Pages 반영이 바로 되지 않아 캐시 우회를 위한 URL 쿼리스트링 기법을 활용하였습니다.</p>
-  </section>
+  <script>
+    const ctx = document.getElementById('chartCanvas').getContext('2d');
+    const labels = [];
+    const endTimes = [];
 
-  <section>
-    <h2>5. 결과 및 개선사항</h2>
-    <p>웹프로그래밍의 개념을 시각화와 함께 정리할 수 있었고, 비동기 통신 및 API 연동 실습 경험을 쌓을 수 있었습니다.</p>
-    <p>다만, 실시간 데이터 시각화는 완전히 구현하지 못해 향후 GAS(Google Apps Script)나 Chart.js 등과 연계해 개선할 계획입니다.</p>
-  </section>
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: '종료 시각 (시간)',
+          data: endTimes,
+          backgroundColor: 'rgba(75, 192, 192, 0.6)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 9,
+            max: 18,
+            ticks: {
+              callback: function(value) {
+                const h = Math.floor(value);
+                const m = Math.round((value - h) * 60);
+                return h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0');
+              }
+            },
+            title: {
+              display: true,
+              text: '종료 시각 (hh:mm)'
+            }
+          }
+        }
+      }
+    });
+
+    document.getElementById('entryForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const dept = document.getElementById('dept').value;
+      const subject = document.getElementById('subject').value;
+      const time = document.getElementById('time').value;
+      if (dept && subject && time) {
+        const [h, m] = time.split(':').map(Number);
+        const decimal = h + m / 60;
+        labels.push(dept + " - " + subject);
+        endTimes.push(decimal);
+        chart.update();
+        this.reset();
+      }
+    });
+  </script>
+
 </body>
 </html>
