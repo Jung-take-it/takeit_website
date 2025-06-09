@@ -3,36 +3,83 @@
 <head>
   <meta charset="UTF-8">
   <title>8장. window, date, math 객체</title>
-  
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #fdfdfd;
-    padding: 40px;
-    line-height: 1.6;
-  }
-  h1, h2 {
-    color: #2c3e50;
-  }
-  pre {
-    background: #f4f4f4;
-    padding: 10px;
-    border-left: 4px solid #ccc;
-    overflow-x: auto;
-  }
-  code {
-    font-family: monospace;
-  }
-</style>
-
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 40px;
+      line-height: 1.6;
+    }
+    h1, h2, h3 {
+      color: #333;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #e0e0e0;
+    }
+    code {
+      background-color: #eef;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-family: Consolas, monospace;
+    }
+  </style>
 </head>
 <body>
   <h1>8장. window, date, math 객체</h1>
-  <p>이 페이지는 "8장. window, date, math 객체"에 대한 기초 개념과 예제를 설명합니다.</p>
-  <p>아래는 기본 예시입니다. (필요시 상세 내용 추가 가능)</p>
-  <pre><code>// 예시 코드
-console.log("Hello, 8장. window, date, math 객체");
-</code></pre>
-  <p><a href="index.html">← 돌아가기</a></p>
+
+  <h2>1. window 객체</h2>
+  <p>브라우저 환경에서 최상위 객체이며, 전역 변수나 함수를 포함하고 있습니다. 팝업창, 타이머, 브라우저 정보 등 다양한 기능을 제어할 수 있습니다.</p>
+
+  <table>
+    <tr><th>속성/메서드</th><th>설명</th><th>예시</th></tr>
+    <tr><td>window.alert()</td><td>알림창을 띄움</td><td><code>alert("Hello!")</code></td></tr>
+    <tr><td>window.confirm()</td><td>확인/취소 창</td><td><code>confirm("정말 삭제하시겠습니까?")</code></td></tr>
+    <tr><td>window.prompt()</td><td>입력값 받기</td><td><code>prompt("이름을 입력하세요")</code></td></tr>
+    <tr><td>window.setTimeout()</td><td>지연 실행</td><td><code>setTimeout(() => alert("1초 후"), 1000)</code></td></tr>
+    <tr><td>window.location</td><td>현재 URL 정보</td><td><code>console.log(location.href)</code></td></tr>
+  </table>
+
+  <h2>2. Date 객체</h2>
+  <p>날짜와 시간을 다루는 내장 객체입니다. 현재 시간 출력, 특정 날짜 설정 등에 유용합니다.</p>
+
+  <table>
+    <tr><th>메서드</th><th>설명</th><th>예시</th></tr>
+    <tr><td>new Date()</td><td>현재 시간</td><td><code>const now = new Date()</code></td></tr>
+    <tr><td>getFullYear()</td><td>연도 가져오기</td><td><code>now.getFullYear()</code></td></tr>
+    <tr><td>getMonth()</td><td>월(0~11)</td><td><code>now.getMonth()</code></td></tr>
+    <tr><td>getDate()</td><td>일자</td><td><code>now.getDate()</code></td></tr>
+    <tr><td>toLocaleString()</td><td>로컬 문자열</td><td><code>now.toLocaleString()</code></td></tr>
+  </table>
+
+  <h2>3. Math 객체</h2>
+  <p>수학적 계산을 위한 내장 객체로, 정적 메서드로 사용됩니다.</p>
+
+  <table>
+    <tr><th>메서드</th><th>설명</th><th>예시</th></tr>
+    <tr><td>Math.abs(x)</td><td>절댓값</td><td><code>Math.abs(-10) // 10</code></td></tr>
+    <tr><td>Math.round(x)</td><td>반올림</td><td><code>Math.round(4.7) // 5</code></td></tr>
+    <tr><td>Math.floor(x)</td><td>내림</td><td><code>Math.floor(4.9) // 4</code></td></tr>
+    <tr><td>Math.random()</td><td>0~1 난수</td><td><code>Math.random()</code></td></tr>
+    <tr><td>Math.pow(x, y)</td><td>x의 y승</td><td><code>Math.pow(2,3) // 8</code></td></tr>
+  </table>
+
+  <h2>예제</h2>
+  <pre><code>// 현재 날짜 출력
+const now = new Date();
+console.log(`오늘은 ${now.getFullYear()}년 ${now.getMonth()+1}월 ${now.getDate()}일입니다.`);
+
+// 0~9 난수 출력
+console.log(Math.floor(Math.random() * 10));</code></pre>
+
 </body>
 </html>
